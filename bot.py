@@ -1,16 +1,17 @@
 import os
 import asyncio
 
-import nextcord
-from nextcord.ext import commands
+import discord
+from discord.ext import commands
 from dotenv import load_dotenv
 
 
 load_dotenv()
-TOKEN = os.getenv("DISCORD_TOKEN")
+TOKEN = os.getenv('ALPHA_TOKEN')
 
-intents = nextcord.Intents.default()
+intents = discord.Intents.default()
 intents.members = True
+intents.message_content = True
 
 bot = commands.Bot(command_prefix=">", case_insensitive=True, help_command=None, intents=intents)
 
@@ -19,8 +20,12 @@ async def on_ready():
     print(f"{bot.user} is up, nyoom!")
 
 
-bot.load_extension("cogs.fun")
-bot.load_extension("cogs.images")
-bot.load_extension("cogs.utility")
+for cog in ['cogs.fun', 'cogs.images', 'cogs.utility']:
+    try:
+        bot.load_extension(cog)
+        print(f"Loaded {cog}")
+    except Exception as e:
+        print(f"Failed to load {cog}: {e}")
+
 
 bot.run(TOKEN)

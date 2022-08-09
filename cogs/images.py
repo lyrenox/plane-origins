@@ -1,12 +1,13 @@
-import nextcord
-from nextcord.ext import commands
-
+import os
 import json
-from random import randint, choice
+from random import choice
+
+import discord
+from discord.ext import commands
 
 
 def image(category):
-    f = open("lib\images.json",)
+    f = open(os.getcwd()+'/lib/images.json') # The directory only works if this project is forever sitting in my computer
     data = json.load(f)
     results = []
     for i in data["images"]:
@@ -26,7 +27,7 @@ class Images(commands.Cog):
     async def lati(self, ctx):
         try:
             image("lati")
-            embed = nextcord.Embed(color=0x66e0ff)
+            embed = discord.Embed(color=0x66e0ff)
             embed.set_author(name="lati", icon_url=ctx.author.avatar.url)
             embed.set_image(url=image.url)
             embed.set_footer(text=f'Source: {image.artist}')
@@ -40,7 +41,7 @@ class Images(commands.Cog):
     async def zeraora(self, ctx):
         try:
             image("zeraora")
-            embed = nextcord.Embed(color=0xffdd00)
+            embed = discord.Embed(color=0xffdd00)
             embed.set_author(name="zeraora", icon_url=ctx.author.avatar.url)
             embed.set_image(url=image.url)
             embed.set_footer(text=f'Source: {image.artist}')
